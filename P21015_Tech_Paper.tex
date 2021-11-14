@@ -24,19 +24,38 @@
 
 \abstract
 
-This is the abstract.
+Stroke is one of the leading causes of death and disability in the United States. Stroke survivors tend to have reduced motor functions, which puts them at higher risk of severe fall related injuries. At the time of writing, methods for assessing the fall risk of post stroke patients have been proposed, however, not many tools exist to collect the necessary data needed for these assessments in a practical and safe manner. In this paper, we propose a solution to the later that will allow post stroke patients to safely gather the data needed for fall risk evaluation from the location of their choice. Furthermore, our solution additionally allows post stroke patients to be assessed remotely once the necessary data has been gathered, eliminating the need for travel.
 
-\section{Introduction}
+\section{Introduction and Problem Statement}
 
-\section{Problem Statement}
+In the United States, someone has a stroke every 40 seconds and someone dies from a stroke every 4 minutes \cite{virani2020heart}. Among the many challenges that post stroke patients face, fall related injuries are among the most common and can occur at any point of a post stroke patients daily routine. Studies have shown that chronic stroke patients fall at rates between 23\% and 50\%, with many patients reporting significant injury after such falls \cite{harris2005relationship}. For this reason, many post stroke patients are assisted by caretakers or family members which can cause emotional stress and financial problems, among others. Therefore, it is critical that a post stroke patient and their family have all of the tools necessary to make an informed decision about how the post stroke patient is to be cared for. At the time of writing, many researchers are attempting to develop a quantitative fall risk scale. This fall risk scale would be an important tool for post stroke patients and their families to determine the appropriate precautions and care needed.
+
+There are many challenges associated with developing such a fall risk scale. One of these challenges being that data must be collected from post stroke patients in order for them to be evaluated. While survey data is easy to obtain via a variety of different methods, the motion sensor data needed for many fall risk models would require specialized equipment and supervision, which is likely only available at a medical facility. For many post stroke patients, leaving their home or care facility can put them at an even higher risk of falling--not to mention--collecting data in a different location can result in inaccurate or unrealistic data used as input to the fall risk model which reduces the quality of the result. Another challenge is the delivery of the fall risk results. In many cases, a fall risk evaluation can help prevent injury or even death. This is why it is important that the fall risk result is communicated in an efficient and streamlined manner to all necessary parties as soon as the results become available.
+
+In this work, we will focus on solving the problem of collecting and transmitting the data necessary for a fall risk evaluation and the problem of communicating the fall risk results back to the post stroke patient and other necessary parties. Our work is independent of the actual fall risk model. We hope that our framework will be widely adopted by different researchers developing different models for fall risk evaluation.
 
 \section{Proposed Solution and Design}
 
+Talk about our solution to the problem first and then go into the details of the design.
+
+\subsection{Android Mobile Application}
+
+\subsection{Flask Web Server}
+
+\subsection{MATLAB Java API}
+
 \section{Design Feasibility and Benchmarks}
+
+Talk about the specifics of the implementation and benchmarks.
+
+\subsection{Android Mobile Application}
+
+\subsection{Flask Web Server}
+
+\subsection{MATLAB Java API}
 
 \section{Conclusion}
 
-\nocite{*}
 \bibliographystyle{IEEEtran}
 \bibliography{bibliography}
 
