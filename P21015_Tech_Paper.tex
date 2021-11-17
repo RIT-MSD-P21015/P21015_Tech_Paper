@@ -1,8 +1,10 @@
-\documentclass[10pt, conference]{IEEEtran}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
+\documentclass[conference]{IEEEtran}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
 \usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
 
 \title{P21015: Fall Risk Mobile}
 
@@ -22,9 +24,9 @@
 
 \maketitle
 
-\abstract
-
+\begin{abstract}
 Stroke is one of the leading causes of death and disability in the United States. Stroke survivors tend to have reduced motor functions, which puts them at higher risk of severe fall related injuries. At the time of writing, methods for assessing the fall risk of post stroke patients have been proposed, however, not many tools exist to collect the necessary data needed for these assessments in a practical and safe manner. In this paper, we propose a solution to the later that will allow post stroke patients to safely gather the data needed for fall risk evaluation from the location of their choice. Furthermore, our solution additionally allows post stroke patients to be assessed remotely once the necessary data has been gathered, eliminating the need for travel.
+\end{abstract}
 
 \section{Introduction and Problem Statement}
 
@@ -36,11 +38,63 @@ In this work, we will focus on solving the problem of collecting and transmittin
 
 \section{Proposed Solution and Design}
 
-Talk about our solution to the problem first and then go into the details of the design.
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.3]{img/systemdesign.png}
+    \caption{System Level Design}
+    \label{systemleveldesign}
+\end{figure}
+
+Figure \ref{systemleveldesign} shows the overall system level design. Blah blah blah.
 
 \subsection{Android Mobile Application}
 
 \subsection{Flask Web Server}
+
+The HTTP REST API implemented on our web server is a key subsystem in our overall system design. This is because the HTTP REST API is what will handle bidirectional communication between the research team and the clients on their mobile application. The term HTTP refers to the application level internet communication protocol. The HTTP internet communication protocol has been a mainstay of the internet since the beginning of its existence and is still widely in use today. The term REST refers to a standardized interface for creating web services. We will follow the convention of using the JSON text format for sending and receiving information via the REST API. The main feature of a REST API is that it is stateless, which greatly simplifies the implementation. Finally, in our web server we must also utilize a relational database to store user profile information, survey data, tests data, and also fall risk results.
+
+The main function of our REST API is to create a bidirectional communication loop between the clients on the mobile application and the research team. The database will store the necessary profile, tests, and survey information. A typical usage scenario of the REST API is as follows:
+\begin{enumerate}
+    \item Client creates a profile via the REST API
+    \item Client requests a temporary login token via the REST API.
+    \item Client collects survey and test data via the mobile application.
+    \item Client sends the survey and test data to the be stored in the web server database via the REST API.
+    \item Researchers pull survey and test data from the web server database via the REST API.
+    \item Researchers analyze data and evaluate fall risk.
+    \item Researchers post fall risk results to the database via the REST API.
+    \item Client pulls fall risk evaluation data from the database via the REST API.
+    \item Repeat if necessary by going back to step 2.
+\end{enumerate}
+In addition to implementing the REST API calls needed for the steps above, we also will implement REST API calls for the clients to:
+\begin{itemize}
+    \item Edit their profile information, i.e., change their e-mail address, password, etc.
+    \item Delete their profile, survey, and test information.
+    \item Reset their password in case they forget it.
+    \item Revoke a temporary access token.
+\end{itemize}
+
+For our database in the web server we can use one of the standard SQL relational database implementations. We will use a single table with the following columns:
+\begin{itemize}
+    \item \texttt{id}: The unique integer id of a user.
+    \item \texttt{firstname}: The string first name of a user.
+    \item \texttt{lastname}: The string last name of a user.
+    \item \texttt{email}: The unique string email address of a user.
+    \item \texttt{admin}: A boolean flag indicating if a user has admin privileges or not.
+    \item \texttt{creation\_timestamp}: A datetime object containing the creation date of the user account.
+    \item \texttt{modification\_timestamp}: A datetime object containing the date that the user account was last modified. Defaults to the creation\_timestamp value.
+    \item \texttt{survey}: A JSON string containing a the survey data of a user.
+    \item \texttt{survey\_timestamp}: A datetime object containing the date of the last survey that the user took. This value can be None.
+    \item \texttt{tests}: A binary blob containing the serialized Java class that should contain the tests data of a user. This value can be None.
+    \item \texttt{tests\_timestamp}: A datetime object containing the date of the last tests that the user took. This value can be None.
+    \item \texttt{result}: A JSON string containing the fall risk result. This value can be None.
+    \item \texttt{result\_timestamp}: A datetime object containing the date of the last result that was posted.
+    \item \texttt{password\_hash}: A string containing the user hashed password.
+    \item \texttt{token}: A string that contains a user temporary access token.
+    \item \texttt{token\_expiration}: A datetime object that contains the expiration date of a user token.
+\end{itemize}
+Each user will be stored in a row of the database. The above fields will allow us to store the necessary user profile information, survey data, tests data, and fall risk results. Several timestamps allow us to determine whether or not a user has posted recent tests and survey information so they can be evaluated.
+
+Lastly, our web service must have some sort of authentication system. The REST API endpoints that are used by each respective user via the mobile application should be private, i.e., users should only be able to modify or see resources in the database that belong to them. Secondly, all REST API endpoints used by the researchers should be sufficiently locked down and they should not be publicly accessible. Effectively, the researcher accounts will be administrator accounts. In the database, administrator accounts will be identified by the admin flag. This flag can only be set manually by a server maintainer for security purposes. Each of the REST API endpoint categories described will utilize a temporary access token that will expire after one hour. So users must first create an account, and then request a temporary access token in order to further obtain or modify resources in the database.
 
 \subsection{MATLAB Java API}
 
@@ -51,6 +105,11 @@ Talk about the specifics of the implementation and benchmarks.
 \subsection{Android Mobile Application}
 
 \subsection{Flask Web Server}
+
+There are several so called web stacks for implementing web services. Given that our team has more experience using Python, we decided to use a Python based web stack. A Python web stack consists of a HTTP server, application server, Python web framework, and a relational database. We decided to use the very popular Flask web framework, along with PostgreSQL for our database and gunicorn for our combined HTTP and application server. All of these tools are open source and have been vetted by the open source community and industry, not to mention, they have been in use for around a decade. Additionally, all of these tools are widely documented and follow all of the standard protocols such as HTTP, PEP, TCP/IP, REST, etc. This not only allows us to focus on our higher level design, but it 
+lows our design to scale if needed to include other standardized services. Finally, we also needed a computer to run our services on. We were able to obtain a virtual machine from RIT to run our web service on. This virtual machine is running the Linux operating system which is ideal for deploying our web service. We utilized Docker to automate the deployment process.
+
+In particular, our implementation was highly influenced by \cite{grinberg2018new}. The author in \cite{grinberg2018new} also developed many Flask extensions that we used to implement e-mail services (Flask-Mail), token and basic HTTP authentication (Flask-HTTPAuth), among others. The author in \cite{grinberg2018new} is widely known in the Python web service community, and his Flask extensions have been vetted by the open source community. Hence, because we are utilizing standardized and community vetted tools, we feel that our implementation is feasible. Mobile applications and web services are so common these days that many resources and tools exist to aid developers and we have tried to take advantage of this. At the time of writing we have been able to implement the main design requirements of our HTTP REST API, namely, the communication loop. While most of the testing has been manual, we believe that this is strong evidence that our design is feasible and will meet the demands of our client.
 
 \subsection{MATLAB Java API}
 
