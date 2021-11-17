@@ -34,9 +34,15 @@ In the United States, someone has a stroke every 40 seconds and someone dies fro
 
 There are many challenges associated with developing such a fall risk scale. One of these challenges being that data must be collected from post stroke patients in order for them to be evaluated. While survey data is easy to obtain via a variety of different methods, the motion sensor data needed for many fall risk models would require specialized equipment and supervision, which is likely only available at a medical facility. For many post stroke patients, leaving their home or care facility can put them at an even higher risk of falling--not to mention--collecting data in a different location can result in inaccurate or unrealistic data used as input to the fall risk model which reduces the quality of the result. Another challenge is the delivery of the fall risk results. In many cases, a fall risk evaluation can help prevent injury or even death. This is why it is important that the fall risk result is communicated in an efficient and streamlined manner to all necessary parties as soon as the results become available.
 
-In this work, we will focus on solving the problem of collecting and transmitting the data necessary for a fall risk evaluation and the problem of communicating the fall risk results back to the post stroke patient and other necessary parties. Our work is independent of the actual fall risk model. We hope that our framework will be widely adopted by different researchers developing different models for fall risk evaluation.
+In this work, we will focus on solving the problem of collecting and transmitting the data necessary for a fall risk evaluation and the problem of communicating the fall risk results back to the post stroke patient and other necessary parties. Our work is independent of the actual fall risk model. We hope that our framework will be widely adopted by different researchers developing different models for fall risk evaluation. 
+
+We will first discuss the proposed solution and design, then the feasibility of the design and benchmarks. We will follow up with concluding remarks and future development opportunities. 
 
 \section{Proposed Solution and Design}
+
+In this section, we will discuss the overall architecture. Then, we will discuss each of the three components in detail. The three components are the mobile application, the web server, and the Matlab API. 
+
+\subsection{High Level Solution}
 
 \begin{figure}[!htb]
     \centering
@@ -45,9 +51,17 @@ In this work, we will focus on solving the problem of collecting and transmittin
     \label{systemleveldesign}
 \end{figure}
 
-Figure \ref{systemleveldesign} shows the overall system level design. Blah blah blah.
+Collecting and transmitting fall risk data requires several technologies. First, the data must be collected using motion sensors attached to the patient. The motion sensors should be easily controllable by the patient so that no training is required to take the assessment. Next, the data must be transmitted digitally to a storage device that can be accessed by the researchers. The storage device should be easily accessible from Matlab, since the fall risk metrics will be calculated using Matlab. The storage device should also be able to hold data from many different patients in an organized manner.
+
+Figure \ref{systemleveldesign} shows the proposed overall system level design. The solution is broken down into three main components: a mobile application, a web server, and a Matlab API. The smart phone application was chosen for it's rapid development, ease-of-use, and built-in motion sensors. Modern smart phones provide both the motion sensors required and the easy-to-use interface required by the patient-side device. Most patients will likely have a smart phone, and a free mobile application is accessible by anyone with an Android phone. The web server was designed to provide a universal API that is easily accessible from any device while still providing some security. The API provides an interface to a database that stores all of the patient data in an organized manner. The API's simple design allows for the Matlab API to also be very simple. All the Matlab script needs to do is format HTTP requests. This design effectively collects patient data in an easily-controlled manner, sends it to an easily-accessible storage device, and provides the information to virtually any internet-connected computer, including the researcher's Matlab device.
 
 \subsection{Android Mobile Application}
+The mobile application development was broken up into two parts: the front end and the back end. This section will first discuss the front end GUI, then the back end data management and networking.
+
+\subsubsection{Application GUI}
+
+\subsubsection{Data Management and Networking}
+
 
 \subsection{Flask Web Server}
 
@@ -100,7 +114,7 @@ Lastly, our web service must have some sort of authentication system. The REST A
 
 \section{Design Feasibility and Benchmarks}
 
-Talk about the specifics of the implementation and benchmarks.
+This section will discuss the specifics of the implementation and benchmarks.
 
 \subsection{Android Mobile Application}
 
