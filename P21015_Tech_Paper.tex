@@ -58,9 +58,13 @@ Figure \ref{systemleveldesign} shows the proposed overall system level design. T
 \subsection{Android Mobile Application}
 The mobile application development was broken up into two parts: the front end and the back end. This section will first discuss the front end GUI, then the back end data management and networking.
 
-\subsubsection{Application GUI}
+$<$insert GUI stuff here$>$
 
-\subsubsection{Data Management and Networking}
+The back end of the application follows a simple process. All networking is done through HTTP requests, starting with the user login. When the user logs in with an existing account, the application stores a single authentication token to be sent back to the server for all future requests. If the user does not have an account, the application submits account creation data to the server to allow the user to login and obtain an authorization token. 
+
+After logging in, the user can navigate to either the information survey or the data collection tests. The survey information is collected as strings and submitted to the server as a large JSON string in an HTTP request. The request must include the user's authentication token or the request will be ignored. Likewise, the information from the physical tests must be submitted with the token or else it will be ignored.
+
+The data collection tests involve both manipulating the phone's motion sensors and submitted the collected data to the server. Standard Android phones come with a gyroscope and an accelerometer. The Android operating system provides several higher-level sensor classes that automatically format the data into nice formats, such as a step counter or rotational velocity sensor. There are seven specific motion data objects: an accelerometer, gyroscope, gravity sensor, linear accelerometer, rotational velocity sensor, and step counter. Every time a sensor is read, it creates a simple object of the sensor's data points at that instance in time. So, during a test, the sensors are read continuously to populate an array for that test. Each sensor array is collected into a single data manager object which is serialized and stored locally on the phone. Once the test is complete, the serialized object is encoded in base64 and sent to the server in a JSON string where it is stored in the data base for the given user. 
 
 
 \subsection{Flask Web Server}
@@ -112,11 +116,19 @@ Lastly, our web service must have some sort of authentication system. The REST A
 
 \subsection{MATLAB Java API}
 
+
 \section{Design Feasibility and Benchmarks}
 
 This section will discuss the specifics of the implementation and benchmarks.
 
 \subsection{Android Mobile Application}
+This section will discuss some of the difficulties of implementing the Android application. 
+
+$<$insert GUI stuff here. specifically mention the prototype and how we had to reprogram a lot$>$
+
+The back end of the application also faced some difficulties. The sensor data collection implementation was simple. However, when trying to submit information to the server, several issues arose. First, Android restricts networking on the main application thread because any networking delay can freeze the entire application. In development, this warning was disabled to prove functionality and then re-enabled for the final solution. 
+
+Another issue we faced in developing the networking for the application was managing a secure token. Each page (or activity) in an Android app is a separate instance of a Java object so information must be passed from page to page. In order to provide the authentication token across several activities, the token must be explicitly passed to every activity that is launched. This provided an effective solution for storing the token in the application across activities. 
 
 \subsection{Flask Web Server}
 
