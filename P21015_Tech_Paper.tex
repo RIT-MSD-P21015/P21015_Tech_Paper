@@ -58,7 +58,7 @@ Figure \ref{systemleveldesign} shows the proposed overall system level design. T
 \subsection{Android Mobile Application}
 The mobile application development was broken up into two parts: the front end and the back end. This section will first discuss the front end GUI, then the back end data management and networking.
 
-$<$insert GUI stuff here$>$
+The front end of the application involves the layout of activities and the content of these activities. Activities are essentially the pages of the app, a button can navigate the user to a different screen. Each of those screens is an activity with its own texts and buttons. Some parts of this layout were given by the customer such as the number of tests and survey questions. The rest of the layout was created using initiative and customer feedback.
 
 The back end of the application follows a simple process. All networking is done through HTTP requests, starting with the user login. When the user logs in with an existing account, the application stores a single authentication token to be sent back to the server for all future requests. If the user does not have an account, the application submits account creation data to the server to allow the user to login and obtain an authorization token. 
 
@@ -115,7 +115,7 @@ Each user will be stored in a row of the database. The above fields will allow u
 Lastly, our web service must have some sort of authentication system. The REST API endpoints that are used by each respective user via the mobile application should be private, i.e., users should only be able to modify or see resources in the database that belong to them. Secondly, all REST API endpoints used by the researchers should be sufficiently locked down and they should not be publicly accessible. Effectively, the researcher accounts will be administrator accounts. In the database, administrator accounts will be identified by the admin flag. This flag can only be set manually by a server maintainer for security purposes. Each of the REST API endpoint categories described will utilize a temporary access token that will expire after one hour. So users must first create an account, and then request a temporary access token in order to further obtain or modify resources in the database.
 
 \subsection{MATLAB Java API}
-
+<Put stuff here, this is here for a line break<
 
 \section{Design Feasibility and Benchmarks}
 
@@ -123,6 +123,15 @@ This section will discuss the specifics of the implementation and benchmarks.
 
 \subsection{Android Mobile Application}
 This section will discuss some of the difficulties of implementing the Android application. 
+
+The first part for creating the front end of the application is to create the layout. For the first iteration of the front end application layout Thunkable was used. This website has a lot of tools to rapidly prototype android applications and was used to create the initial demo layout and flow for the application. This application was demoed with the customer and was received very positively. With the initial application layout and activity flow created, the entire workflow was recreated using Android Studio. Android Studio is an IDE developed by Google to program applications for Android. This IDE had a very useful activity designer for designing the XML for each activity. Figure \ref{thunkvsandroid}, below, shows the variation between these activities in each development environment.
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[scale=0.5]{img/Thunkable_vs_android_studio.png}
+    \caption{Thunkable versus Android Studio Activity}
+    \label{thunkvsandroid}
+\end{figure}
 
 $<$insert GUI stuff here. specifically mention the prototype and how we had to reprogram a lot$>$
 
