@@ -137,6 +137,8 @@ The first part for creating the front end of the application is to create the la
 \label{thunkvsandroid}
 \end{figure}
 
+One problem with developing for Android is that you have to make the app usable for all types of phones, Android Studio does this by constraining elements of the GUI to other parts of the activity. This makes it so parts can scale of each other to accommodate for different sized screens. This scaling feature was not realized when the entire application was programmed in Android Studio. Because of this, the entire framework of the GUI layout for each activities had to be reprogrammed. While this caused some problems, it has allowed the application to be usable on all screen sizes.
+
 The back end of the application also faced some difficulties. The sensor data collection implementation was simple. However, when trying to submit information to the server, several issues arose. First, Android restricts networking on the main application thread because any networking delay can freeze the entire application. In development, this warning was disabled to prove functionality and then re-enabled for the final solution. 
 
 Another issue we faced in developing the networking for the application was managing a secure token. Each page (or activity) in an Android app is a separate instance of a Java object so information must be passed from page to page. In order to provide the authentication token across several activities, the token must be explicitly passed to every activity that is launched. This provided an effective solution for storing the token in the application across activities. 
