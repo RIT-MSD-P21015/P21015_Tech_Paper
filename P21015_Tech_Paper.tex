@@ -45,10 +45,10 @@ In this section, we will discuss the overall architecture. Then, we will discuss
 \subsection{High Level Solution}
 
 \begin{figure}[!htb]
-    \centering
-    \includegraphics[scale=0.3]{img/systemdesign.png}
-    \caption{System Level Design}
-    \label{systemleveldesign}
+\centering
+\includegraphics[scale=0.3]{img/systemdesign.png}
+\caption{System Level Design}
+\label{systemleveldesign}
 \end{figure}
 
 Collecting and transmitting fall risk data requires several technologies. First, the data must be collected using motion sensors attached to the patient. The motion sensors should be easily controllable by the patient so that no training is required to take the assessment. Next, the data must be transmitted digitally to a storage device that can be accessed by the researchers. The storage device should be easily accessible from Matlab, since the fall risk metrics will be calculated using Matlab. The storage device should also be able to hold data from many different patients in an organized manner.
@@ -73,42 +73,42 @@ The HTTP REST API implemented on our web server is a key subsystem in our overal
 
 The main function of our REST API is to create a bidirectional communication loop between the clients on the mobile application and the research team. The database will store the necessary profile, tests, and survey information. A typical usage scenario of the REST API is as follows:
 \begin{enumerate}
-    \item Client creates a profile via the REST API
-    \item Client requests a temporary login token via the REST API.
-    \item Client collects survey and test data via the mobile application.
-    \item Client sends the survey and test data to the be stored in the web server database via the REST API.
-    \item Researchers pull survey and test data from the web server database via the REST API.
-    \item Researchers analyze data and evaluate fall risk.
-    \item Researchers post fall risk results to the database via the REST API.
-    \item Client pulls fall risk evaluation data from the database via the REST API.
-    \item Repeat if necessary by going back to step 2.
+\item Client creates a profile via the REST API
+\item Client requests a temporary login token via the REST API.
+\item Client collects survey and test data via the mobile application.
+\item Client sends the survey and test data to the be stored in the web server database via the REST API.
+\item Researchers pull survey and test data from the web server database via the REST API.
+\item Researchers analyze data and evaluate fall risk.
+\item Researchers post fall risk results to the database via the REST API.
+\item Client pulls fall risk evaluation data from the database via the REST API.
+\item Repeat if necessary by going back to step 2.
 \end{enumerate}
 In addition to implementing the REST API calls needed for the steps above, we also will implement REST API calls for the clients to:
 \begin{itemize}
-    \item Edit their profile information, i.e., change their e-mail address, password, etc.
-    \item Delete their profile, survey, and test information.
-    \item Reset their password in case they forget it.
-    \item Revoke a temporary access token.
+\item Edit their profile information, i.e., change their e-mail address, password, etc.
+\item Delete their profile, survey, and test information.
+\item Reset their password in case they forget it.
+\item Revoke a temporary access token.
 \end{itemize}
 
 For our database in the web server we can use one of the standard SQL relational database implementations. We will use a single table with the following columns:
 \begin{itemize}
-    \item \texttt{id}: The unique integer id of a user.
-    \item \texttt{firstname}: The string first name of a user.
-    \item \texttt{lastname}: The string last name of a user.
-    \item \texttt{email}: The unique string email address of a user.
-    \item \texttt{admin}: A boolean flag indicating if a user has admin privileges or not.
-    \item \texttt{creation\_timestamp}: A datetime object containing the creation date of the user account.
-    \item \texttt{modification\_timestamp}: A datetime object containing the date that the user account was last modified. Defaults to the creation\_timestamp value.
-    \item \texttt{survey}: A JSON string containing a the survey data of a user.
-    \item \texttt{survey\_timestamp}: A datetime object containing the date of the last survey that the user took. This value can be None.
-    \item \texttt{tests}: A binary blob containing the serialized Java class that should contain the tests data of a user. This value can be None.
-    \item \texttt{tests\_timestamp}: A datetime object containing the date of the last tests that the user took. This value can be None.
-    \item \texttt{result}: A JSON string containing the fall risk result. This value can be None.
-    \item \texttt{result\_timestamp}: A datetime object containing the date of the last result that was posted.
-    \item \texttt{password\_hash}: A string containing the user hashed password.
-    \item \texttt{token}: A string that contains a user temporary access token.
-    \item \texttt{token\_expiration}: A datetime object that contains the expiration date of a user token.
+\item \texttt{id}: The unique integer id of a user.
+\item \texttt{firstname}: The string first name of a user.
+\item \texttt{lastname}: The string last name of a user.
+\item \texttt{email}: The unique string email address of a user.
+\item \texttt{admin}: A boolean flag indicating if a user has admin privileges or not.
+\item \texttt{creation\_timestamp}: A datetime object containing the creation date of the user account.
+\item \texttt{modification\_timestamp}: A datetime object containing the date that the user account was last modified. Defaults to the creation\_timestamp value.
+\item \texttt{survey}: A JSON string containing a the survey data of a user.
+\item \texttt{survey\_timestamp}: A datetime object containing the date of the last survey that the user took. This value can be None.
+\item \texttt{tests}: A binary blob containing the serialized Java class that should contain the tests data of a user. This value can be None.
+\item \texttt{tests\_timestamp}: A datetime object containing the date of the last tests that the user took. This value can be None.
+\item \texttt{result}: A JSON string containing the fall risk result. This value can be None.
+\item \texttt{result\_timestamp}: A datetime object containing the date of the last result that was posted.
+\item \texttt{password\_hash}: A string containing the user hashed password.
+\item \texttt{token}: A string that contains a user temporary access token.
+\item \texttt{token\_expiration}: A datetime object that contains the expiration date of a user token.
 \end{itemize}
 Each user will be stored in a row of the database. The above fields will allow us to store the necessary user profile information, survey data, tests data, and fall risk results. Several timestamps allow us to determine whether or not a user has posted recent tests and survey information so they can be evaluated.
 
@@ -131,13 +131,11 @@ This section will discuss some of the difficulties of implementing the Android a
 The first part for creating the front end of the application is to create the layout. For the first iteration of the front end application layout Thunkable was used. This website has a lot of tools to rapidly prototype android applications and was used to create the initial demo layout and flow for the application. This application was demoed with the customer and was received very positively. With the initial application layout and activity flow created, the entire workflow was recreated using Android Studio. Android Studio is an IDE developed by Google to program applications for Android. This IDE had a very useful activity designer for designing the XML for each activity. Figure \ref{thunkvsandroid}, below, shows the variation between these activities in each development environment.
 
 \begin{figure}[!htb]
-    \centering
-    \includegraphics[scale=0.5]{img/Thunkable_vs_android_studio.png}
-    \caption{Thunkable versus Android Studio Activity}
-    \label{thunkvsandroid}
+\centering
+\includegraphics[scale=0.5]{img/Thunkable_vs_android_studio.png}
+\caption{Thunkable versus Android Studio Activity}
+\label{thunkvsandroid}
 \end{figure}
-
-$<$insert GUI stuff here. specifically mention the prototype and how we had to reprogram a lot$>$
 
 The back end of the application also faced some difficulties. The sensor data collection implementation was simple. However, when trying to submit information to the server, several issues arose. First, Android restricts networking on the main application thread because any networking delay can freeze the entire application. In development, this warning was disabled to prove functionality and then re-enabled for the final solution. 
 
@@ -151,6 +149,10 @@ lows our design to scale if needed to include other standardized services. Final
 In particular, our implementation was highly influenced by \cite{grinberg2018new}. The author in \cite{grinberg2018new} also developed many Flask extensions that we used to implement e-mail services (Flask-Mail), token and basic HTTP authentication (Flask-HTTPAuth), among others. The author in \cite{grinberg2018new} is widely known in the Python web service community, and his Flask extensions have been vetted by the open source community. Hence, because we are utilizing standardized and community vetted tools, we feel that our implementation is feasible. Mobile applications and web services are so common these days that many resources and tools exist to aid developers and we have tried to take advantage of this. At the time of writing we have been able to implement the main design requirements of our HTTP REST API, namely, the communication loop. While most of the testing has been manual, we believe that this is strong evidence that our design is feasible and will meet the demands of our client.
 
 \subsection{MATLAB Java API}
+
+The Matlab Java API was split up into two main components: the Java application and the Matlab script. The Java application includes a main FallRiskAdmin class that provides functions that can interact with the server. These functions include a getToken() function, that logs in and sets the authentication token for future requests. It also has a getUserData function that pulls all of the stored data about a single user. Finally, there is a postUserResults function that sends the results of the data analysis back to the server for review by the user. There are several object classes as well, including a TokenResp class that holds the token information and UserData and UserResult classes that hold data for the user in the local Java application.
+
+This Java application is designed to be callable from a Matlab script. The installation of the Java application includes a sample example.m Matlab script that demonstrates how to call the Java program from Matlab. This is a very simple script that uses the Java program to log in to the web server to obtain a token, then pull and send sample user data. It should be everything the researchers need to interact with the server we have set up. 
 
 \section{Conclusion}
 
