@@ -115,7 +115,11 @@ Each user will be stored in a row of the database. The above fields will allow u
 Lastly, our web service must have some sort of authentication system. The REST API endpoints that are used by each respective user via the mobile application should be private, i.e., users should only be able to modify or see resources in the database that belong to them. Secondly, all REST API endpoints used by the researchers should be sufficiently locked down and they should not be publicly accessible. Effectively, the researcher accounts will be administrator accounts. In the database, administrator accounts will be identified by the admin flag. This flag can only be set manually by a server maintainer for security purposes. Each of the REST API endpoint categories described will utilize a temporary access token that will expire after one hour. So users must first create an account, and then request a temporary access token in order to further obtain or modify resources in the database.
 
 \subsection{MATLAB Java API}
-<Put stuff here, this is here for a line break<
+The Matlab Java API should provide an easy-to-use program that allows the researchers to interact with the web server containing the user database. Some possible designs include using a Matlab HTTP library to send and receive data, or an integrated Java application that can be called from Matlab. The design should make it easy to package data for transmission over the internet as well as use a package format that can be used by both Matlab and Android. 
+
+Since both Matlab and Android are closely integrated with standard Java, Java class serialization can be leveraged to transmit and store the user data. On the Android side, the physical sensor data is packaged into a data manager class that holds all of the information for a given test. This class can be serialized and stored as serialized data in the database. Then, the Matlab script must de-serialize the class in order to access the data. 
+
+We propose a Java application that provides an API that makes interacting with the web server simple from Matlab. The Java application, installed with precompiled classes, can be called from a Matlab script and can provide the necessary user data with little effort. A sample Matlab script will be included to demonstrate the functionality of the Java application.
 
 \section{Design Feasibility and Benchmarks}
 
