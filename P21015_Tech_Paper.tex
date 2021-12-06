@@ -170,12 +170,34 @@ While the web server in its current state is fully functional, there are some im
     \item Upgrade the web server to use HTTPS instead of HTTP. The use of HTTPS is standard these days as it encrypts message information while in transit. Regular HTTP transmits message information in plain text.
     \item Use a professional e-mail server on the server computer. At the time of writing, we are using a gmail account to send e-mails. In order to deploy a professional e-mail server on the server computer and to have the messages be able to be received by major e-mail providers, an e-mail relay must be set up. In order to setup a Google e-mail relay, a professional google account is needed (an RIT gmail account would suffice).
     \item Once the professional e-mail server is in place, there should be an e-mail validation step before a user is allowed to create an account. This will prevent users from being locked out of their accounts, and it will also prevent someone from maliciously overloading the database with invalid accounts.
-    \item Setup a proxy server, e.g., something like NGNIX to sit in front of gunicorn. In addition to load balancing and caching, the proxy server will act similar to a firewall in that it will prevent direct access to the internal resources of the server (this can prevent DOS attacks).
+    \item Setup a proxy server, e.g., something like NGINX to sit in front of gunicorn. In addition to load balancing and caching, the proxy server will act similar to a firewall in that it will prevent direct access to the internal resources of the server (this can prevent DOS attacks).
+    \item Currently, all user test data is stored in a single cell in the database. This could potentially lead to unknown data loss or corruption in transmission. The database should be overhauled to better distribute the data from the physical tests. An additional benefit of restructuring the database is that the researchers would have more control over which data they want to access. It would also allow the mobile application to better track which physical tests have been performed.
 \end{itemize}
 
 \subsection{Mobile Application}
 
+The application is functional enough to collect data, but there is still some important features that need to be implemented. 
+
+\begin{itemize}
+    \item There is currently no way for a user to tell which physical tests they have completed and which ones still need to be performed. The application could be improved by letting the user know which tests still need to be completed, and allowing the user to jump to the tests they need to do. 
+    \item Currently, some networking functions on the application run on the main application thread. If the app is not connected to the internet, or the server is disconnected from the internet, the app may freeze when trying to perform these networking actions. The application code should be rewritten to instead submit the networking request on a separate thread and simply watch the results without freezing the application in case the network connection is unavailable. 
+    \item There is no data stored locally on the application. If the phone is disconnected from the internet, or if the server is unavailable, the user cannot login. Storing user data on the phone would allow the user to review their data without an internet connection. 
+    \item All secure networking implemented on the server needs to be reflected on the app. This includes the upgrade to HTTPS and any other data encryption methods. 
+    \item Apple's iPhone devices are popular alternatives to Android and contain many of the same hardware sensors in use by the app. Developing an iPhone solution would allow even more patients to access the app and participate in the study. This work would be quite extensive since the entire app would have to be rewritten in an iPhone-compatible language and adhere to Apple's stricter development standards. The server and Matlab script may have to change to allow the functions provided by the iPhone operating system to interact with them. 
+\end{itemize}
+
 \subsection{MATLAB Java API}
+
+The MATLAB Java API currently requires no further work. This is because it has been built to access the data stored in the server and designed to be reworked as the researchers need. The API has been designed to provide an interface that can be built on for the core of the post-stroke fall risk analysis.
+
+If the server were to be changed in the ways previously described, the Matlab script should change accordingly.
+
+\begin{itemize}
+    \item If the server is changed to use HTTPS, the Java API will have to be built to use HTTPS as well.
+    \item If the user data is encrypted, the Matlab endpoint will have to be updated to include the capabilities to encrypt and decrypt the data.
+    \item If the database structure changes and the way the user test data is obtained also changes, the Java API will have to be updated accordingly. 
+    \item If there are any changes required by the iOS implementation, the API will have to be updated. 
+\end{itemize}
 
 \subsection{Suggestions for further work}
 
