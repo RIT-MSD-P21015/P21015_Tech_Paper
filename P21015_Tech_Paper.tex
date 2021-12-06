@@ -173,6 +173,15 @@ While the web server in its current state is fully functional, there are some im
 
 \subsection{MATLAB Java API}
 
+\subsection{Suggestions for further work}
+
+While the current project design would not need another round of MSD, the design could be modified to do so. Along with the recommendations in this section, the following design additions would be plenty of work for another MSD team.
+
+\begin{itemize}
+    \item Modify server so the fall risk evaluation model can be deployed on it in a modular fashion. This would allow for the whole fall risk evaluation process to become automated. In this case, the fall risk evaluation model would have to be ported over to Python.
+    \item Make an IOS version of the mobile application.
+\end{itemize}
+
 \section{Conclusion}
 
 The overall goal of this project has been to create a tool that can collect the necessary data needed for fall risk evaluation from post stroke patients and to also allow for post strokes patients to have their fall risk evaluated remotely by a research team. Our solution was to create an Android mobile application, web service, and MATLAB API. The mobile application will provide the interface for post stroke patients to collect important biometric and categorical data that is needed for a fall risk evaluation. In addition, the mobile application is how post stroke patients will communicate with the research team. At the heart of this bidirectional communication loop between the researchers and the post stroke patients on their mobile application is our web service. Our web service was implemented via industry standard software libraries and database implementations. Lastly, since our research team uses MATLAB for their fall risk model, we have implemented a MATLAB API to interact with our web service, thus, completing the communication loop between the post stroke patient and research team. This bidirectional communication loop between the post stroke patients and research team allows post stroke patients to be safely evaluated for fall risk from the comfort of their own home, and with or without the help of a family member or caretaker. Thus, our product can prevent potentially fatal fall related injuries. Furthermore, our solution is flexible and is implemented with standardized tools, so it can be easily extended or be utilized by other research teams. We hope that our product will have a positive impact on the community of post stroke patients and the teams that work hard to create accurate fall risk models.
