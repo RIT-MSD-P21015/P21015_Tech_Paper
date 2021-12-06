@@ -156,6 +156,23 @@ The Matlab Java API was split up into two main components: the Java application 
 
 This Java application is designed to be callable from a Matlab script. The installation of the Java application includes a sample example.m Matlab script that demonstrates how to call the Java program from Matlab. This is a very simple script that uses the Java program to log in to the web server to obtain a token, then pull and send sample user data. It should be everything the researchers need to interact with the server we have set up. 
 
+\section{Next Steps}
+
+\subsection{Flask Web Server}
+
+While the web server in its current state is fully functional, there are some improvements that should be implemented:
+
+\begin{itemize}
+    \item Upgrade the web server to use HTTPS instead of HTTP. The use of HTTPS is standard these days as it encrypts message information while in transit. Regular HTTP transmits message information in plain text.
+    \item Use a professional e-mail server on the server computer. At the time of writing, we are using a gmail account to send e-mails. In order to deploy a professional e-mail server on the server computer and to have the messages be able to be received by major e-mail providers, an e-mail relay must be set up. In order to setup a Google e-mail relay, a professional google account is needed (an RIT gmail account would suffice).
+    \item Once the professional e-mail server is in place, there should be an e-mail validation step before a user is allowed to create an account. This will prevent users from being locked out of their accounts, and it will also prevent someone from maliciously overloading the database with invalid accounts.
+    \item Setup a proxy server, e.g., something like NGNIX to sit in front of gunicorn. In addition to load balancing and caching, the proxy server will act similar to a firewall in that it will prevent direct access to the internal resources of the server (this can prevent DOS attacks).
+\end{itemize}
+
+\subsection{Mobile Application}
+
+\subsection{MATLAB Java API}
+
 \section{Conclusion}
 
 The overall goal of this project has been to create a tool that can collect the necessary data needed for fall risk evaluation from post stroke patients and to also allow for post strokes patients to have their fall risk evaluated remotely by a research team. Our solution was to create an Android mobile application, web service, and MATLAB API. The mobile application will provide the interface for post stroke patients to collect important biometric and categorical data that is needed for a fall risk evaluation. In addition, the mobile application is how post stroke patients will communicate with the research team. At the heart of this bidirectional communication loop between the researchers and the post stroke patients on their mobile application is our web service. Our web service was implemented via industry standard software libraries and database implementations. Lastly, since our research team uses MATLAB for their fall risk model, we have implemented a MATLAB API to interact with our web service, thus, completing the communication loop between the post stroke patient and research team. This bidirectional communication loop between the post stroke patients and research team allows post stroke patients to be safely evaluated for fall risk from the comfort of their own home, and with or without the help of a family member or caretaker. Thus, our product can prevent potentially fatal fall related injuries. Furthermore, our solution is flexible and is implemented with standardized tools, so it can be easily extended or be utilized by other research teams. We hope that our product will have a positive impact on the community of post stroke patients and the teams that work hard to create accurate fall risk models.
