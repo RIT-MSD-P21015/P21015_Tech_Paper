@@ -184,6 +184,8 @@ The application is functional enough to collect data, but there is still some im
     \item There is no data stored locally on the application. If the phone is disconnected from the internet, or if the server is unavailable, the user cannot login. Storing user data on the phone would allow the user to review their data without an internet connection. 
     \item All secure networking implemented on the server needs to be reflected on the app. This includes the upgrade to HTTPS and any other data encryption methods. 
     \item Apple's iPhone devices are popular alternatives to Android and contain many of the same hardware sensors in use by the app. Developing an iPhone solution would allow even more patients to access the app and participate in the study. This work would be quite extensive since the entire app would have to be rewritten in an iPhone-compatible language and adhere to Apple's stricter development standards. The server and Matlab script may have to change to allow the functions provided by the iPhone operating system to interact with them. 
+    \item Since no data is stored in the app, user preferences for font size and primary/secondary colors are not saved and have to be customized through the settings page on every app refresh. A next step solution would be to use a SQLite database to store this data. This data could also hold other information such as data to be sent and test data.
+    \item While there is text to speech for the test instructions, some of these test would work much better with voiced instructions that indicated curtain points in the test. These indications would include how much time is left and a warning to end the test after a determined hard stop time. This would help the user experience as this app is targeted to older individuals who would benefit from these extra indications.
 \end{itemize}
 
 \subsection{MATLAB Java API}
@@ -205,7 +207,10 @@ While the current project design would not need another round of MSD, the design
 
 \begin{itemize}
     \item Modify server so the fall risk evaluation model can be deployed on it in a modular fashion. This would allow for the whole fall risk evaluation process to become automated. In this case, the fall risk evaluation model would have to be ported over to Python.
-    \item Make an IOS version of the mobile application.
+    \item Develop an IOS version of the mobile application.
+    \item Add images for tests. Add a nice GIF or series of images to demonstrate the tests along with the instructions.
+    \item Email notification when fall risk results are published. Could also send email to user's doctor if that information is available.
+    \item 
 \end{itemize}
 
 \section{Conclusion}
